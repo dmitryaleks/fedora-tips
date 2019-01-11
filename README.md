@@ -119,3 +119,72 @@ to:
 ```
 GRUB_CMDLINE_LINUX="rd.lvm.lv=fedora/swap rd.lvm.lv=fedora/root rhgb quiet acpi_backlight=vendor"
 ```
+
+### How to move space from a dual boot Windows partition to Fedora and use it to extend Fedora home partition
+
+First, delete existing dual-boot partition:
+```
+sudo fdisk /dev/sda
+
+# type 'p', which stands for print and browse available partitions
+
+# type 'd', which stands for delete
+d
+
+# type the number of partition to be deleted, E.g. 5
+5
+
+# write to the disk
+w
+```
+
+Create a new partition that will be used by Fedora:
+```
+sudo fdisk /dev/sda
+
+# type 'p', which stands for print and browse available partitions
+
+# type 'n', which stands for new partition creation
+n
+
+# select new partition number (E.g. type: 7):
+7
+
+# keep pressing enter to create a new partition with size equal to the amount of free space on the disk
+
+# write to the disk
+w
+```
+
+Reboot the system.
+
+Create a new device on top of the newly created partition:
+```
+sudo pvcreate /dev/sda7
+```
+
+Extend Fedora to use the new device:
+```
+sudo vgextend fedora /dev/sda7
+```
+
+Extend Fedora home to use the new partition:
+```
+sudo lvextend -L150G /dev/mapper/fedora-home
+```
+
+Resize Fedora home to give all the newly added space:
+```
+sudo resize2fs /dev/mapper/fedora-home
+```
+
+Confirm that Fedora home has been extended:
+```
+df -h
+```
+
+Sample output:
+```
+Filesystem               Size  Used Avail Use% Mounted on
+/dev/mapper/fedora-home  148G   26G  116G  18% /home
+```
