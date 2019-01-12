@@ -188,3 +188,25 @@ Sample output:
 Filesystem               Size  Used Avail Use% Mounted on
 /dev/mapper/fedora-home  148G   26G  116G  18% /home
 ```
+
+### Upgrade Fedora to the latest version
+
+First apply updates:
+```
+sudo dnf -y update
+```
+
+Install System Upgrade tool:
+```
+sudo dnf install dnf-plugin-system-upgrade
+```
+
+Download and install a new version of Fedora:
+```
+sudo dnf system-upgrade download --refresh --releasever=29
+```
+
+Reboot the system:
+```
+sudo dnf system-upgrade reboot
+```
