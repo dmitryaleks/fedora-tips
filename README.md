@@ -210,3 +210,10 @@ Reboot the system:
 ```
 sudo dnf system-upgrade reboot
 ```
+
+### How to activate Anaconda environemnt for Python
+
+```
+cd /home/dmitry/anaconda3/envs
+source activate ml
+```
