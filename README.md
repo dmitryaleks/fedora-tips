@@ -211,9 +211,15 @@ Reboot the system:
 sudo dnf system-upgrade reboot
 ```
 
-### How to activate Anaconda environemnt for Python
+### How to activate Anaconda environment for Python
 
 ```
 cd /home/dmitry/anaconda3/envs
 source activate ml
+```
+
+### How to stop tracker-store service that consume lots of CPU resource
+
+```
+tracker reset --hard
 ```
